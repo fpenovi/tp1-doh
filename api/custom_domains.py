@@ -1,12 +1,5 @@
-from flask import abort, make_response
-
-CUSTOM_DOMAINS = {
-    'custom1.fi.uba.ar': {
-        'domain': 'custom1.fi.uba.ar',
-        'ip': '1.1.1.1',
-        'custom': True
-    }
-}
+from flask import request
+from storage.domains import Domains
 
 def obtener_todos():
     """
@@ -14,5 +7,5 @@ def obtener_todos():
 
         :return:        200 lista de dominios custom registrados que contienen <string>
         """
-    search_result = [CUSTOM_DOMAINS['custom1.fi.uba.ar']]
-    return {'items': search_result}
+    query = request.args.get('q') or ''
+    return {'items': Domains.filter_custom_by(query)}
