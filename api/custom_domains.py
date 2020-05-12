@@ -1,6 +1,8 @@
 from flask import request
-from storage.domains import Domains
 from flask import abort, make_response
+from storage.domains import Domains
+from errors.custom_domain_already_exists_exception import CustomDomainAlreadyExistsException
+from errors.missing_parameter_exception import MissingParameterException
 
 def obtener_todos():
     """
@@ -18,5 +20,11 @@ def crear(**kwargs):
         :return:        201 dominio creado, 400 body mal formado o el dominio ya existe.
         """
     new_domain = kwargs['body']
-    return make_response(Domains.save(new_domain), 201)
+
+    try:
+        result = Domains.save(new_domain)
+    except (CustomDomainAlreadyExistsException, MissingParameterException) as e:
+        return abort(400, str(e))
+
+    return make_response(result, 201)
 
