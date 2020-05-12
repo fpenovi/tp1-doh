@@ -14,7 +14,7 @@ paths:
     get:
       operationId: "api.custom_domains.obtener_todos"
       tags:
-        - "Custom Domains"
+        - "Filtrar Custom Domains"
       summary: "Colección filtrada de dominios custom registrados"
       description: "Obtiene la lista de dominios custom registrados que incluyan al string q en su nombre de dominio"
       parameters:
@@ -36,6 +36,32 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Domain"
+    post:
+      operationId: "api.custom_domains.crear"
+      tags:
+        - "Crear Custom Domain"
+      summary: "Crea un nuevo Dominio custom"
+      description: "Crea un nuevo Dominio custom a partir de un nombre de dominio y una ip. El nombre de dominio debe ser único"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDomain"
+      responses:
+        201:
+          description: "Se creó el dominio correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Domain"
+        400:
+          description: "Nombre de dominio duplicado o request malformado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 
 # Declaración de tipos de datos
 components:
@@ -49,3 +75,17 @@ components:
           type: string
         custom:
           type: boolean
+
+    CreateDomain:
+      type: object
+      properties:
+        domain:
+          type: string
+        ip:
+          type: string
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
