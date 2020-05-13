@@ -1,5 +1,8 @@
 from flask import request
+from flask import abort, make_response
 from storage.domains import Domains
+from errors.custom_domain_already_exists_exception import CustomDomainAlreadyExistsException
+from errors.missing_parameter_exception import MissingParameterException
 
 def obtener_todos():
     """
@@ -9,3 +12,19 @@ def obtener_todos():
         """
     query = request.args.get('q') or ''
     return {'items': Domains.filter_custom_by(query)}
+
+def crear(**kwargs):
+    """
+        Esta funcion maneja el request POST /api/custom-domains
+         :param body:  dominio a crear en la lista de dominios
+        :return:        201 dominio creado, 400 body mal formado o el dominio ya existe.
+        """
+    new_domain = kwargs['body']
+
+    try:
+        result = Domains.save(new_domain)
+    except (CustomDomainAlreadyExistsException, MissingParameterException) as e:
+        return abort(400, str(e))
+
+    return make_response(result, 201)
+

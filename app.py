@@ -1,7 +1,9 @@
 import connexion
+from errors import set_error_handlers
 
 app = connexion.App(__name__, specification_dir='./api')
 app.add_api('swagger.yml')
+set_error_handlers(app)
 
 
 if __name__ == '__main__':

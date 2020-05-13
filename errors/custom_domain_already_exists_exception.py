@@ -1,0 +1,2 @@
+class CustomDomainAlreadyExistsException(Exception):
+    pass
