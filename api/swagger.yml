@@ -10,6 +10,35 @@ servers:
 
 # Paths servidos por la aplicación
 paths:
+  /domains/{domain_name}:
+    get:
+      operationId: "api.domains.obtener_uno"
+      tags:
+        - "Obtener IP para Domain"
+      summary: "Obtiene una ip para el dominio consultado"
+      description: "Realiza una consulta DNS y devuelve una sola ip para el dominio que se recibió por parámetro.
+                    La ip devuelta puede no ser siempre la misma ya que alterna entre las ip de acceso posibles para ese dominio."
+      parameters:
+        - in: path
+          name: domain_name
+          required: true
+          schema:
+            type: string
+          description: "Nombre del dominio a consultar"
+      responses:
+        200:
+          description: "Operación de lectura exitosa"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        404:
+          description: "Alumno no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /custom-domains:
     get:
       operationId: "api.custom_domains.obtener_todos"
@@ -62,7 +91,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-
 # Declaración de tipos de datos
 components:
   schemas:
@@ -75,6 +103,7 @@ components:
           type: string
         custom:
           type: boolean
+          nullable: false
 
     CreateDomain:
       type: object
