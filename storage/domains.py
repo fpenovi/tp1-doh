@@ -2,25 +2,7 @@ import copy
 from errors.missing_parameter_exception import MissingParameterException
 from errors.custom_domain_already_exists_exception import CustomDomainAlreadyExistsException
 
-__DOMAINS = {
-    'custom1.fi.uba.ar': {
-        'domain': 'custom1.fi.uba.ar',
-        'ip': '1.1.1.1',
-        'custom': True
-    },
-    'custom2.fi.uba.ar': {
-        'domain': 'custom2.fi.uba.ar',
-        'ip': '2.2.2.2',
-        'custom': True
-    },
-    'www.yahoo.com': {
-        'domain': 'www.yahoo.com',
-        'ip': '160.49.91.10',
-        'custom': False
-    }
-}
-
-class __DomainCollection:
+class CustomDomainRepository:
     DOMAIN_KEY = 'domain'
     IP_KEY = 'ip'
     CUSTOM_KEY = 'custom'
@@ -28,6 +10,9 @@ class __DomainCollection:
     def __init__(self, domains={}):
         self.domains = copy.deepcopy(domains)
         self.__validate([self.DOMAIN_KEY, self.IP_KEY, self.CUSTOM_KEY])
+
+    def __getitem__(self, domain_name):
+        return self.domains[domain_name]
 
     def __validate(self, req_keyset=(DOMAIN_KEY, IP_KEY, CUSTOM_KEY)):
         for domain in self.domains.values():
@@ -38,12 +23,8 @@ class __DomainCollection:
             if key not in domain.keys():
                 raise MissingParameterException(f'missing parameter: {key}')
 
-    def custom(self):
-        return list(filter(lambda d: d[self.CUSTOM_KEY], self.domains.values()))
-
-    def filter_custom_by(self, search):
-        custom_domains = self.custom()
-        results = filter(lambda d: search in d[self.DOMAIN_KEY], custom_domains)
+    def filter_by(self, search):
+        results = filter(lambda d: search in d[self.DOMAIN_KEY], self.domains.values())
         return list(results)
 
     def save(self, new_domain):
@@ -57,5 +38,5 @@ class __DomainCollection:
         self.domains[new_domain_name] = new_domain
         return new_domain
 
-
-Domains = __DomainCollection(__DOMAINS)
+    def has(self, domain_name):
+        return domain_name in self.domains

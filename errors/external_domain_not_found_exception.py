@@ -1,0 +1,2 @@
+class ExternalDomainNotFoundException(Exception):
+    pass

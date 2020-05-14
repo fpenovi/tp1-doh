@@ -1,6 +1,6 @@
 from flask import request
 from flask import abort, make_response
-from storage.domains import Domains
+from dns_balancer import DNS
 from errors.custom_domain_already_exists_exception import CustomDomainAlreadyExistsException
 from errors.missing_parameter_exception import MissingParameterException
 
@@ -11,7 +11,7 @@ def obtener_todos():
         :return:        200 lista de dominios custom registrados que contienen <string>
         """
     query = request.args.get('q') or ''
-    return {'items': Domains.filter_custom_by(query)}
+    return {'items': DNS.all(query=query, custom=True)}
 
 def crear(**kwargs):
     """
@@ -22,7 +22,7 @@ def crear(**kwargs):
     new_domain = kwargs['body']
 
     try:
-        result = Domains.save(new_domain)
+        result = DNS.save(new_domain)
     except (CustomDomainAlreadyExistsException, MissingParameterException) as e:
         return abort(400, str(e))
 
