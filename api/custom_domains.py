@@ -28,3 +28,6 @@ def crear(**kwargs):
 
     return make_response(result, 201)
 
+def actualizar(**kwargs):
+
+    return make_response('result', 200)
