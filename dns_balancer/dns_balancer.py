@@ -45,6 +45,9 @@ class DNSBalancer:
     def update(self, domain_name, update_domain):
         return self.storage.update(domain_name, update_domain)
 
+    def delete(self, domain_name):
+        return self.storage.delete(domain_name)
+
     def __cached(self, domain_name):
         if domain_name not in self.cached:
             return False

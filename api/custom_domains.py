@@ -48,3 +48,13 @@ def actualizar(**kwargs):
         return abort(404, str(e))
 
     return make_response(result, 200)
+
+
+def borrar(domain_name):
+    try:
+        result = DNS.delete(domain_name)
+        result = {'domain': result}
+    except CustomDomainNotFoundException as e:
+        return abort(404, str(e))
+    return make_response(result, 200)
+

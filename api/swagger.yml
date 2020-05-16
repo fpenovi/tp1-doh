@@ -76,7 +76,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateDomain"
+              $ref: "#/components/schemas/CustomDomain"
       responses:
         201:
           description: "Se creó el dominio correctamente"
@@ -110,7 +110,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateDomain"
+              $ref: "#/components/schemas/CustomDomain"
       responses:
         200:
           description: "Se actualizó el dominio correctamente"
@@ -130,6 +130,37 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    delete:
+      operationId: "api.custom_domains.borrar"
+      tags:
+        - "Borrar Custom Domain"
+      summary: "Borra un dominio existente en el sistema."
+      description: "Borra un dominio existente en el sistema."
+      parameters:
+        - in: path
+          name: domain_name
+          required: true
+          schema:
+            type: string
+          description: "Nombre del dominio a borrar"
+      responses:
+        200:
+          description: "Operación de borrado exitosa"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  domain:
+                    type: string
+        404:
+          description: "Dominio no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
 
 # Declaración de tipos de datos
 components:
@@ -145,15 +176,7 @@ components:
           type: boolean
           nullable: false
 
-    CreateDomain:
-      type: object
-      properties:
-        domain:
-          type: string
-        ip:
-          type: string
-
-    UpdateDomain:
+    CustomDomain:
       type: object
       properties:
         domain:
