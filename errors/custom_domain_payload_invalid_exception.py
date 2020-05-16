@@ -1,0 +1,2 @@
+class CustomDomainPayloadInvalid(Exception):
+    pass
