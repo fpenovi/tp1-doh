@@ -130,6 +130,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    delete:
+      operationId: "api.custom_domains.borrar"
+      tags:
+        - "Borrar Custom Domain"
+      summary: "Borra un dominio existente en el sistema."
+      description: "Borra un dominio existente en el sistema."
+      parameters:
+        - in: path
+          name: domain_name
+          required: true
+          schema:
+            type: string
+          description: "Nombre del dominio a borrar"
+      responses:
+        200:
+          description: "Operación de borrado exitosa"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        404:
+          description: "Dominio no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
 
 # Declaración de tipos de datos
 components:

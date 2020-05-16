@@ -48,3 +48,9 @@ def actualizar(**kwargs):
         return abort(404, str(e))
 
     return make_response(result, 200)
+
+
+def borrar(domain_name):
+    return make_response(domain_name, 200)
+
+
