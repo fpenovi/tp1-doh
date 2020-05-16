@@ -1,0 +1,2 @@
+class CustomDomainNotFoundException(Exception):
+    pass
