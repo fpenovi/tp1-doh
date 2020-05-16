@@ -149,7 +149,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Domain'
+                $ref: '#/components/schemas/DeleteDomain'
         404:
           description: "Dominio no encontrado"
           content:
@@ -187,6 +187,12 @@ components:
         domain:
           type: string
         ip:
+          type: string
+
+    DeleteDomain:
+      type: object
+      properties:
+        domain:
           type: string
 
     Error:

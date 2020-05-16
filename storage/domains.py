@@ -53,3 +53,11 @@ class CustomDomainRepository:
         else:
             raise CustomDomainNotFoundException('custom domain not found')
         return self.domains[domain_name]
+
+    def delete(self, domain_name):
+        if domain_name in self.domains:
+            del self.domains[domain_name]
+        else:
+            raise CustomDomainNotFoundException('custom domain not found')
+        return domain_name
+
