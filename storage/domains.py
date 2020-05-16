@@ -1,4 +1,7 @@
 import copy
+
+from errors.custom_domain_not_found_exception import CustomDomainNotFoundException
+from errors.custom_domain_payload_invalid_exception import CustomDomainPayloadInvalid
 from errors.missing_parameter_exception import MissingParameterException
 from errors.custom_domain_already_exists_exception import CustomDomainAlreadyExistsException
 
@@ -40,3 +43,13 @@ class CustomDomainRepository:
 
     def has(self, domain_name):
         return domain_name in self.domains
+
+    def update(self, domain_name, update_domain):
+        self.__validate_one(update_domain)
+        if domain_name != update_domain[self.DOMAIN_KEY]:
+            raise CustomDomainPayloadInvalid('payload is invalid')
+        if domain_name in self.domains:
+            self.domains[domain_name][self.IP_KEY] = update_domain[self.IP_KEY]
+        else:
+            raise CustomDomainNotFoundException('custom domain not found')
+        return self.domains[domain_name]

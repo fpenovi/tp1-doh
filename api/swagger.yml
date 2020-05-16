@@ -91,6 +91,46 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /custom-domains/{domain_name}:
+    put:
+      operationId: "api.custom_domains.actualizar"
+      tags:
+        - "Actualizar Custom Domain"
+      summary: "Edita un dominio ya existente en el sistema."
+      description: "Edita un dominio ya existente en el sistema."
+      parameters:
+        - in: path
+          name: domain_name
+          required: true
+          schema:
+            type: string
+          description: "Nombre del dominio a actualizar"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDomain"
+      responses:
+        200:
+          description: "Se actualizó el dominio correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Domain"
+        404:
+          description: "Nombre de dominio no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        400:
+          description: "Request malformado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 # Declaración de tipos de datos
 components:
   schemas:
@@ -106,6 +146,14 @@ components:
           nullable: false
 
     CreateDomain:
+      type: object
+      properties:
+        domain:
+          type: string
+        ip:
+          type: string
+
+    UpdateDomain:
       type: object
       properties:
         domain:
