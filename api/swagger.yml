@@ -76,7 +76,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateDomain"
+              $ref: "#/components/schemas/CustomDomain"
       responses:
         201:
           description: "Se creó el dominio correctamente"
@@ -110,7 +110,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateDomain"
+              $ref: "#/components/schemas/CustomDomain"
       responses:
         200:
           description: "Se actualizó el dominio correctamente"
@@ -149,7 +149,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteDomain'
+                type: object
+                properties:
+                  domain:
+                    type: string
         404:
           description: "Dominio no encontrado"
           content:
@@ -173,26 +176,12 @@ components:
           type: boolean
           nullable: false
 
-    CreateDomain:
+    CustomDomain:
       type: object
       properties:
         domain:
           type: string
         ip:
-          type: string
-
-    UpdateDomain:
-      type: object
-      properties:
-        domain:
-          type: string
-        ip:
-          type: string
-
-    DeleteDomain:
-      type: object
-      properties:
-        domain:
           type: string
 
     Error:
