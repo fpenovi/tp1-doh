@@ -42,9 +42,7 @@ def actualizar(**kwargs):
 
     try:
         result = DNS.update(domain_name, update_domain)
-    except MissingParameterException as e:
-        return abort(400, str(e))
-    except CustomDomainPayloadInvalid as e:
+    except (MissingParameterException, CustomDomainPayloadInvalid) as e:
         return abort(400, str(e))
     except CustomDomainNotFoundException as e:
         return abort(404, str(e))
