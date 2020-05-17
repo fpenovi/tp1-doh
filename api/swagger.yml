@@ -27,13 +27,13 @@ paths:
           description: "Nombre del dominio a consultar"
       responses:
         200:
-          description: "Operación de lectura exitosa"
+          description: "Obtencion de IP exitosa"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Domain'
         404:
-          description: "Alumno no encontrado"
+          description: "Hostname no encontrado"
           content:
             application/json:
               schema:
@@ -55,7 +55,7 @@ paths:
             type: string
       responses:
         200:
-          description: "Operación de lectura exitosa"
+          description: "Obtencion y filtrado de Custom Domins exitoso"
           content:
             application/json:
               schema:
