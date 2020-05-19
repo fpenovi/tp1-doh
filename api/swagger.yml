@@ -55,7 +55,7 @@ paths:
             type: string
       responses:
         200:
-          description: "Obtencion y filtrado de Custom Domins exitoso"
+          description: "Obtencion y filtrado de Custom Domains exitoso"
           content:
             application/json:
               schema:
